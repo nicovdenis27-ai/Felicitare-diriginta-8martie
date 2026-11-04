@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>La mulți ani de 8 Martie!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#07090c;--win:#0f1218;--line:#252b36;--ink:#abb2bf;--dim:#7f8794;
 --kw:#c678dd;--str:#98c379;--fn:#61afef;--num:#d19a66;--ty:#e5c07b;--vr:#e06c75;--op:#56b6c2;--ok:#98c379;--bad:#e06c75;
@@ -15,6 +15,9 @@ html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font:400 13.5px/1.65 "JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;overflow:hidden}
 .kw{color:var(--kw)}.str{color:var(--str)}.fn{color:var(--fn)}.num{color:var(--num)}.ty{color:var(--ty)}.vr{color:var(--vr)}.op{color:var(--op)}
 .ok{color:var(--ok)}.bad{color:var(--bad)}.dim,.cm{color:var(--dim)}.cm{font-style:italic}.b{font-weight:700}
+#bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+#bg .lg{position:absolute;font-size:10px;font-weight:700;padding:1px 5px;border:1px solid;border-radius:4px;opacity:.4}
+#bg .sy{position:absolute;font-weight:700;opacity:.22}
 /* zonele "must not" din schițe: 9vh sus și jos rămân goale */
 .screen{position:absolute;inset:0;display:none;padding:9vh 14px;overflow-y:auto;z-index:1}
 .screen.on{display:flex}
@@ -29,46 +32,87 @@ p{margin:0 0 12px;max-width:62ch}
 .pl{margin:0 0 8px;word-break:break-word}
 button{font:inherit}
 button:focus-visible{outline:2px solid var(--fn);outline-offset:2px}
-.btn{display:block;width:100%;min-height:48px;margin-top:16px;border:1px solid var(--ok);border-radius:6px;background:transparent;color:var(--ok);font-weight:700;cursor:pointer}
+.btn{display:block;width:100%;min-height:48px;margin-top:14px;border:1px solid var(--ok);border-radius:6px;background:transparent;color:var(--ok);font-weight:700;cursor:pointer}
 .btn:active{background:var(--ok);color:var(--bg)}
-.hide{display:none}
-.ln{display:flex;gap:8px;white-space:nowrap}
-.ln .sp{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-6px)}
+.btn{animation:glow 2.4s ease-in-out infinite;transition:background .15s,color .15s}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(152,195,121,0)}50%{box-shadow:0 0 16px 2px rgba(152,195,121,.35)}}
+.ans,.blk{transition:transform .15s,border-color .15s}
+.ans:active,.blk:active{transform:scale(.97)}
+@media (hover:hover){.ans:hover,.blk:hover{border-color:var(--fn)}.ans:hover{transform:translateX(3px)}}
+.pgb{height:4px;background:var(--line);border-radius:2px;margin:0 0 12px;overflow:hidden}
+.pgb i{display:block;height:100%;width:0;background:var(--ok)}
+.hide{display:none!important}
+.prog{margin:0 0 6px;min-height:6.6em;padding:10px;background:#0b0e13;border:1px solid var(--line);border-radius:6px;font:inherit;white-space:pre-wrap;word-break:break-word}
 .ans{display:block;width:100%;min-height:46px;margin-top:8px;padding:10px 12px;text-align:left;background:#0b0e13;color:var(--ink);border:1px solid var(--line);border-radius:6px;cursor:pointer}
 .ans.ok{border-color:var(--ok)}.ans.bad{border-color:var(--bad);opacity:.7}
 .fb{margin:12px 0 0;min-height:1.65em}
-.puz{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;aspect-ratio:1;width:100%;max-width:320px;margin:0 auto 4px;touch-action:manipulation}
-.puz.done{gap:0;border-radius:6px;overflow:hidden}
-.pc{width:100%;height:100%;border:0;padding:0;background-size:300% 300%;border-radius:4px;cursor:pointer}
-.puz.done .pc{border-radius:0}
-.pc.sel{outline:3px solid var(--ty);outline-offset:-3px}
-.code{margin:0 0 14px;min-height:13em;font:inherit;white-space:pre-wrap;word-break:break-word}
+.slots{display:flex;flex-direction:column;gap:6px;min-height:92px;padding:8px;border:1px dashed var(--line);border-radius:8px;margin-bottom:12px}
+.bank{display:flex;flex-wrap:wrap;gap:8px}
+.blk{padding:8px 11px;text-align:left;color:var(--ink);background:#141821;border:1px solid var(--line);border-left:4px solid var(--c);border-radius:8px;border-bottom-width:3px;cursor:pointer;word-break:break-word}
+.slots .blk{width:100%}
 .cur::after{content:"█";color:var(--ok);animation:bl 1s steps(1) infinite}
 @keyframes bl{50%{opacity:0}}
+.code{margin:0 0 14px;min-height:12em;font:inherit;white-space:pre-wrap;word-break:break-word}
 .sticker{display:block;width:110px;margin:2px auto 8px;opacity:0}
 .sig{opacity:0;margin:0}
-.petal{position:fixed;top:0;font-size:20px;font-weight:700;pointer-events:none;z-index:2;transform:translateY(-10vh)}
-@media (prefers-reduced-motion: reduce){.cur::after{animation:none}}
+#tr{position:fixed;inset:0;z-index:5;background:var(--bg);display:none;align-items:center;justify-content:center}
+#trt{margin:0;font:inherit}
+@media (prefers-reduced-motion: reduce){.cur::after,.btn{animation:none}}
+.prog{font-size:12px;min-height:15em;overflow-x:auto}
+.blk{touch-action:pan-y;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none;transition:border-color .15s}
+.blk:active{transform:none}
+.blk.fly{position:fixed;z-index:7;margin:0;pointer-events:none;box-shadow:0 10px 24px rgba(0,0,0,.55);border-color:var(--fn)}
+.insl{height:3px;border-radius:2px;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.typing::after{content:"█";color:var(--ok);animation:bl 1s steps(1) infinite}
+h1{animation:tg 3s ease-in-out infinite}
+@keyframes tg{50%{text-shadow:0 0 14px rgba(229,192,123,.45)}}
+.win{animation:wb 5s ease-in-out infinite}
+@keyframes wb{50%{box-shadow:0 0 26px rgba(97,175,239,.14)}}
+#bg{transition:transform .4s ease-out}
+#trt{animation:fl .12s steps(2) 3}
+@keyframes fl{50%{opacity:.6}}
+@media (prefers-reduced-motion: reduce){.typing::after,h1,.win,#trt{animation:none}}
+.screen{padding:clamp(18px,7vh,70px) 14px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+#bg{transition:none}
+#bg .lg{opacity:.3}
+.ans.hint{border-color:var(--ty);box-shadow:0 0 12px rgba(229,192,123,.5)}
+.blk:active{border-color:var(--ok)}
+.slots{transition:border-color .15s}
+h1{animation:none}
+#s0 h1::after{content:"▌";color:var(--ok);margin-left:4px;animation:bl 1s steps(1) infinite}
+#s3 .win{animation:none}
+#s3 .body{display:flex;flex-direction:column;align-items:center;text-align:center}
+#s3 .pl{align-self:flex-start;text-align:left}
+#s3 .code{text-align:left;font-size:12px;width:100%}
+#s3 .sticker{width:96px}
+#s3 .sig{letter-spacing:.3px}
+@media (prefers-reduced-motion: reduce){#s0 h1::after{animation:none}}
+.blk.armed{border-color:var(--fn);transform:scale(1.02)}
+.screen:not(#s0) .bar i:first-child{position:relative;cursor:pointer}
+.screen:not(#s0) .bar i:first-child::after{content:"";position:absolute;inset:-12px}
+.sig{font-family:"Caveat","Segoe Script",cursive;font-style:normal;font-size:21px}
 </style>
 </head>
 <body>
+<div id="bg" aria-hidden="true"></div>
 
 <section class="screen on" id="s0"><div class="win">
   <div class="bar"><i></i><i></i><i></i><span>clasa11@8martie: ~</span></div>
   <div class="body">
-    <h1>La mulți ani!</h1>
-    <p class="cm">// Stimată doamnă dirigintă, clasa a XI-a a pregătit pentru Dumneavoastră o surpriză scrisă în cod.</p>
-    <p class="pl" data-cmd="./compileaza --toate-limbajele"></p>
-    <div id="log"></div>
-    <p class="hide" id="done"><span class="ok b">Compilare reușită</span> <span class="cm">// 0 erori, ∞ felicitări</span></p>
-    <button class="btn hide" id="start">$ ./surpriza</button>
+    <p class="pl t" data-cmd="cat README.md"></p>
+    <h1 class="t">La mulți ani!</h1>
+    <p class="cm t">// Stimată doamnă dirigintă, clasa a XI-a a pregătit pentru Dumneavoastră o surpriză scrisă în cod.</p>
+    <p class="cm" id="lang">&nbsp;</p>
+    <pre class="prog" id="prog"></pre>
+    <button class="btn hide" id="start">$ chmod +x surpriza &amp;&amp; ./surpriza</button>
   </div>
 </div></section>
 
 <section class="screen" id="s1"><div class="win">
   <div class="bar"><i></i><i></i><i></i><span id="qn">test.py</span></div>
   <div class="body">
-    <p class="pl" data-cmd="python test.py"></p>
+    <p class="pl t" data-cmd="python test.py"></p>
+    <div class="pgb"><i id="pb"></i></div>
     <p id="q"></p>
     <div id="ans"></div>
     <p class="fb" id="fb"></p>
@@ -76,20 +120,23 @@ button:focus-visible{outline:2px solid var(--fn);outline-offset:2px}
 </div></section>
 
 <section class="screen" id="s2"><div class="win">
-  <div class="bar"><i></i><i></i><i></i><span>puzzle.sh</span></div>
+  <div class="bar"><i></i><i></i><i></i><span>felicitare.pas</span></div>
   <div class="body">
-    <p class="pl" data-cmd="./puzzle.sh"></p>
-    <p class="cm" id="pz">// Atingeți două piese ca să le schimbați locul.</p>
-    <div class="puz" id="puz"></div>
+    <p class="pl t" data-cmd="fpc felicitare.pas"></p>
+    <p class="cm t">// Alcătuiți programul Pascal: atingeți sau trageți (pe telefon, țineți apăsat puțin) blocurile în ordinea corectă. Blocul an := 8; este opțional, dar unul dintre blocuri nu aparține limbajului Pascal!</p>
+    <div class="slots" id="slots"></div>
+    <div class="bank" id="bank"></div>
+    <p class="fb" id="pres"></p>
+    <button class="btn" id="chk">$ fpc --verifică</button>
     <button class="btn hide" id="next2">$ ./felicitare</button>
   </div>
 </div></section>
 
 <section class="screen" id="s3"><div class="win">
-  <div class="bar"><i></i><i></i><i></i><span>felicitare.js</span></div>
+  <div class="bar"><i></i><i></i><i></i><span>felicitare.c</span></div>
   <div class="body">
-    <p class="pl" data-cmd="node felicitare.js"></p>
-    <pre class="code cur" id="out"></pre>
+    <p class="pl t" data-cmd="gcc felicitare.c -o f"></p>
+    <pre class="code" id="out"></pre>
     <svg class="sticker" id="sticker" viewBox="0 0 200 200" aria-hidden="true">
       <circle cx="100" cy="100" r="92" fill="#98c379" stroke="#0f1218" stroke-width="8"/>
       <text x="100" y="94" font-size="54" text-anchor="middle">🌷</text>
@@ -97,167 +144,355 @@ button:focus-visible{outline:2px solid var(--fn);outline-offset:2px}
       <text x="100" y="152" font-size="14" text-anchor="middle" fill="#0b0d10" font-family="monospace">exit code 0</text>
     </svg>
     <p class="cm sig" id="sig">// — elevii clasei a XI-a</p>
+    <button class="btn hide" id="share">$ ./trimite</button>
+    <button class="btn hide" id="again">$ ./reia</button>
   </div>
 </div></section>
+
+<div id="tr"><pre id="trt"></pre></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script>
 (function(){
-var A=window.anime,RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var anim=!!A&&!RM;
-var $=function(s){return document.querySelector(s)},S=[].slice.call(document.querySelectorAll('.screen')),cur=0;
+var A=window.anime,anim=!!A&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $=function(s){return document.querySelector(s)},S=[].slice.call(document.querySelectorAll('.screen')),cur=0,busy=false,loopT=null,mT=null,gen=0;
 
-/* promptul de terminal */
+/* colorare de sintaxă (comună pentru toate limbajele) */
+function hl(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(
+  /(\/\/.*|--.*)|("(?:[^"\\]|\\.)*"|'[^']*')|(#include\s+&lt;.*?&gt;)|(\b\d+\b)|(\b(?:def|fn|let|const|var|func|function|int|void|return|begin|end|program|integer|class|public|static|if|then|else|for|while|import|use|using|main|select|from|as|display|text|trace|type|val|string|do|of)\b)|(\b[A-Za-z_][\w.:]*(?=\())/gi,
+  function(m,a,b,c,d,e){return '<span class="'+(a?'dim':b?'str':c?'kw':d?'num':e?'kw':'fn')+'">'+m+'</span>'});
+}
+
+/* text scris ca în terminal: păstrează culorile (parcurge nodurile de text) */
+function typeIn(el,cb,sp){
+  var w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),ns=[],n,fin=false;
+  while((n=w.nextNode()))ns.push([n,n.data]);
+  function done(){if(fin)return;fin=true;el.classList.remove('typing');cb&&cb()}
+  if(!anim){done();return}
+  ns.forEach(function(x){x[0].data=''});
+  var i=0,c=0,stop=false,g=gen;
+  el.classList.add('typing');el._skip=function(){stop=true;ns.forEach(function(x){x[0].data=x[1]});done()};
+  (function s(){
+    if(stop||g!==gen)return;
+    if(i>=ns.length){done();return}
+    var x=ns[i];c++;x[0].data=x[1].slice(0,c);
+    if(c>=x[1].length){i++;c=0}
+    setTimeout(s,sp||14);
+  })();
+}
+function seq(els,cb){var i=0;(function n(){if(i>=els.length){cb&&cb();return}typeIn(els[i++],n)})()}
+
+/* prompt de terminal */
 [].forEach.call(document.querySelectorAll('[data-cmd]'),function(el){
-  var c=el.getAttribute('data-cmd').split(' '),first=c.shift();
-  el.innerHTML='<span class="ok b">clasa11@8martie</span><span>:</span><span class="fn b">~</span><span>$ </span><span class="fn">'+first+'</span> <span class="op">'+c.join(' ')+'</span>';
+  var c=el.getAttribute('data-cmd').split(' '),f=c.shift();
+  el.innerHTML='<span class="ok b">clasa11@8martie</span><span>:</span><span class="fn b">~</span><span>$ </span><span class="fn">'+f+'</span> <span class="op">'+c.join(' ')+'</span>';
 });
 
-function go(n){
-  var a=S[cur],b=S[n];
-  function show(){
-    a.classList.remove('on');b.classList.add('on');cur=n;
-    if(anim)A({targets:b.querySelector('.win'),opacity:[0,1],translateY:[8,0],duration:300,easing:'easeOutCubic'});
-    if(n===3)finale();
-  }
-  if(anim)A({targets:a.querySelector('.win'),opacity:0,duration:180,easing:'linear',complete:show});
-  else show();
+/* limbajele: nume | extensie | cod */
+var LG=[
+`Python|py|mesaj = "§"\nprint(mesaj)`,
+`C++|cpp|#include <iostream>\n#include <string>\n\nint main() {\n  std::string mesaj = "§";\n  std::cout << mesaj << "\\n";\n  return 0;\n}`,
+`C|c|#include <stdio.h>\n\nint main(void) {\n  const char *mesaj = "§";\n  printf("%s\\n", mesaj);\n  return 0;\n}`,
+`C#|cs|using System;\n\nclass Program {\n  static void Main() {\n    string mesaj = "§";\n    Console.WriteLine(mesaj);\n  }\n}`,
+`Rust|rs|fn main() {\n  let mesaj = "§";\n  println!("{}", mesaj);\n}`,
+`Zig|zig|const std = @import("std");\n\npub fn main() void {\n  const mesaj = "§";\n  std.debug.print("{s}\\n", .{mesaj});\n}`,
+`Assembler|asm|section .data\n  mesaj db "§", 10\nsection .text\n  global _start\n_start:\n  mov eax, 4\n  mov ebx, 1\n  mov ecx, mesaj\n  mov edx, 14\n  int 0x80`,
+`Bash|sh|#!/bin/bash\nmesaj="§"\necho "$mesaj"`,
+`Java|java|public class Main {\n  public static void main(String[] args) {\n    String mesaj = "§";\n    System.out.println(mesaj);\n  }\n}`,
+`Kotlin|kt|fun main() {\n  val mesaj = "§"\n  println(mesaj)\n}`,
+`Swift|swift|let mesaj = "§"\nprint(mesaj)`,
+`Go|go|package main\n\nimport "fmt"\n\nfunc main() {\n  mesaj := "§"\n  fmt.Println(mesaj)\n}`,
+`JavaScript|js|const mesaj = "§";\nconsole.log(mesaj);`,
+`PHP|php|<?php\n$mesaj = "§";\necho $mesaj;\n?>`,
+`TypeScript|ts|const mesaj: string = "§";\nconsole.log(mesaj);`,
+`Ruby|rb|mesaj = "§"\nputs mesaj`,
+`E|e|def mesaj := "§"\nprintln(mesaj)`,
+`Julia|jl|mesaj = "§"\nprintln(mesaj)`,
+`Dart|dart|void main() {\n  String mesaj = '§';\n  print(mesaj);\n}`,
+`Objective-C|m|#import <Foundation/Foundation.h>\n\nint main() {\n  NSString *mesaj = @"§";\n  NSLog(@"%@", mesaj);\n  return 0;\n}`,
+`SQL|sql|DECLARE @mesaj NVARCHAR(50) = '§';\nSELECT @mesaj;`,
+`Lua|lua|local mesaj = "§"\nprint(mesaj)`,
+`Scala|scala|object Main extends App {\n  val mesaj = "§"\n  println(mesaj)\n}`,
+`Haskell|hs|main :: IO ()\nmain = do\n  let mesaj = "§"\n  putStrLn mesaj`,
+`Elixir|ex|mesaj = "§"\nIO.puts(mesaj)`,
+`Erlang|erl|-module(main).\n-export([start/0]).\n\nstart() ->\n  Mesaj = "§",\n  io:format("~s~n", [Mesaj]).`,
+`Clojure|clj|(def mesaj "§")\n(println mesaj)`,
+`F#|fs|let mesaj = "§"\nprintfn "%s" mesaj`,
+`OCaml|ml|let mesaj = "§"\nlet () = print_endline mesaj`,
+`PowerShell|ps1|$mesaj = "§"\nWrite-Host $mesaj`,
+`Perl|pl|my $mesaj = "§";\nprint "$mesaj\\n";`,
+`Groovy|groovy|def mesaj = "§"\nprintln mesaj`,
+`Tcl|tcl|set mesaj "§"\nputs $mesaj`,
+`ActionScript|as|var mesaj:String = "§";\ntrace(mesaj);`,
+`Elm|elm|module Main exposing (main)\nimport Html exposing (text)\n\nmesaj = "§"\n\nmain =\n  text mesaj`,
+`Pascal/Delphi|pas|program Felicitare;\nvar\n  mesaj: string;\nbegin\n  mesaj := '§';\n  writeln(mesaj);\nend.`,
+`Fortran|f90|program felicitare\n  character(len=14) :: mesaj = "§"\n  print *, mesaj\nend program felicitare`,
+`COBOL|cbl|IDENTIFICATION DIVISION.\nPROGRAM-ID. FELICITARE.\nDATA DIVISION.\nWORKING-STORAGE SECTION.\n01 MESAJ PIC X(14) VALUE "§".\nPROCEDURE DIVISION.\n  DISPLAY MESAJ.\n  STOP RUN.`,
+`Lisp|lisp|(defvar *mesaj* "§")\n(format t "~a~%" *mesaj*)`,
+`Prolog|pro|mesaj('§').\n\n:- mesaj(M), write(M), nl.`,
+`Smalltalk|st|| mesaj |\nmesaj := '§'.\nTranscript show: mesaj; cr.`,
+`Ada|adb|with Ada.Text_IO; use Ada.Text_IO;\n\nprocedure Felicitare is\n  Mesaj : String := "§";\nbegin\n  Put_Line (Mesaj);\nend Felicitare;`
+].map(function(s){var p=s.split('|');return [p[0],p[1],p.slice(2).join('|').replace(/§/g,'La mulți ani!')]});
+
+/* fundal: "logo-uri" ale limbajelor (etichete colorate) + simboluri mici */
+(function(){
+  var bg=$('#bg'),sy=['{ }',';','</>','01','()','[]','=>','::'];
+  function put(c,t,css){var d=document.createElement('span');d.className=c;d.textContent=t;d.style.cssText=css;bg.appendChild(d)}
+  LG.forEach(function(l,i){var h=['var(--fn)','var(--kw)','var(--ty)'][i%3];put('lg','.'+l[1],'left:'+(Math.random()*88)+'%;top:'+(Math.random()*94)+'%;color:'+h+';border-color:'+h+'')});
+  for(var i=0;i<26;i++)put('sy'+(i<10?' mv':''),sy[i%sy.length],'left:'+(Math.random()*94)+'%;top:'+(Math.random()*96)+'%;font-size:'+(11+Math.random()*12)+'px;color:'+['var(--fn)','var(--kw)','var(--ty)'][i%3]+'');
+  window.bgA=anim&&A({targets:'#bg .sy.mv',translateY:function(){return A.random(-30,30)},translateX:function(){return A.random(-14,14)},rotate:function(){return A.random(-14,14)},opacity:function(){return A.random(14,55)/100},direction:'alternate',loop:true,duration:function(){return A.random(3500,7000)},easing:'easeInOutSine'});
+})();
+
+/* ecranul 1: programul se transformă dintr-un limbaj în altul */
+var li=0;
+function E(c){return c==='<'?'&lt;':c==='>'?'&gt;':c==='&'?'&amp;':c}
+function morph(el,txt){
+  clearInterval(mT);
+  if(anim){A({targets:el,translateX:[0,-4,4,-3,3,0],duration:450,easing:'linear'});A({targets:el,borderColor:['#252b36','#98c379','#252b36'],duration:900,easing:'linear'});A({targets:'#lang',opacity:[0,1],translateX:[-10,0],duration:450,easing:'easeOutCubic'})}
+  var len=txt.length,k=0,ch='!<>-_/[]{}=+*^?#01';
+  mT=setInterval(function(){
+    k+=Math.ceil(len/14);var o='';
+    for(var i=k;i<len;i++){var c=txt.charAt(i);o+=(c==='\n'||c===' ')?c:'<span class="dim">'+E(ch.charAt(Math.floor(Math.random()*ch.length)))+'</span>'}
+    el.innerHTML=hl(txt.slice(0,k))+o;
+    if(k>=len){clearInterval(mT);el.innerHTML=hl(txt)}
+  },35);
+}
+var firstCb=null;
+function showLang(first){
+  var L=LG[li],p=$('#prog');
+  $('#lang').textContent='// limbaj '+(li+1)+'/'+LG.length+': '+L[0]+' (.'+L[1]+')';
+  if(first||!anim){p.innerHTML=hl(L[2]);if(first)typeIn(p,firstCb,5);else if(firstCb)firstCb()}else morph(p,L[2]);
+}
+function startLoop(cb){
+  firstCb=cb;showLang(true);
+  if(anim)loopT=setInterval(function(){li=(li+1)%LG.length;showLang(false)},7000);
 }
 
-/* ecranul 1: "compilarea" limbajelor */
-var LANGS=[['Rust','main.rs'],['C','main.c'],['C++','main.cpp'],['C#','Program.cs'],['Zig','main.zig'],['Assembler','main.asm'],['Bash','felicitare.sh'],['Java','Main.java'],['Kotlin','Main.kt'],['Swift','main.swift'],['Go','main.go'],['Python','main.py'],['JavaScript','index.js'],['PHP','index.php']];
-function intro(){
-  var log=$('#log');
-  LANGS.forEach(function(l){
-    var d=document.createElement('div');d.className='ln';
-    d.innerHTML='<span class="ok">[ OK ]</span><span class="ty">'+l[0]+'</span><span class="sp"></span><span class="dim">'+l[1]+'</span>';
-    log.appendChild(d);
-  });
-  var m=document.createElement('div');m.className='ln cm';m.textContent='// și multe altele...';log.appendChild(m);
-  function fin(){$('#done').classList.remove('hide');$('#start').classList.remove('hide')}
-  if(anim){
-    [].forEach.call(log.children,function(r){r.style.opacity=0});
-    A({targets:'#log .ln',opacity:[0,1],delay:A.stagger(110),duration:150,easing:'linear',complete:fin});
-  }else fin();
-}
-
-/* ecranul 2: întrebări */
+/* ecranul 2: întrebări (ușor / mediu / greu) */
 var Q=[
- {q:'Care limbaj are cea mai frumoasă sintaxă?',a:['C++','Assembler','Python','Bash'],c:2,ok:'La fel de frumoasă ca Dumneavoastră.'},
- {q:'Care limbaj este cel mai elegant?',a:['Assembler','JavaScript','C#','Zig'],c:1,ok:'Elegant, exact ca Dumneavoastră.'},
- {q:'Ferris, mascota limbajului Rust, este un...',a:['pinguin','crab','delfin','arici'],c:1,ok:'Ferris este un crab 🦀'}
-],qi=0;
+['ușor','Care limbaj are cea mai frumoasă sintaxă?',['C++','Assembler','Python','Bash'],2,'La fel de frumoasă ca Dumneavoastră.'],
+['ușor','Care limbaj este cel mai elegant, după părerea clasei?',['Assembler','JavaScript','C#','Zig'],1,'Elegant, exact ca Dumneavoastră.'],
+['ușor','Ferris, mascota limbajului Rust, este un...',['pinguin','crab','delfin','arici'],1,'Ferris este un crab 🦀'],
+['ușor','Ce afișează print("Salut") în Python?',['Salut','print','Eroare','Nimic'],0,''],
+['ușor','Ce înseamnă HTML?',['HyperText Markup Language','High Text Machine Language','Home Tool Markup Language','Hyper Transfer Mode Link'],0,''],
+['mediu','Cât este 2 + 2 * 2 în programare?',['8','6','4','222'],1,'Înmulțirea are prioritate.'],
+['mediu','Ce operator din C dă adresa unei variabile?',['*','&','#','@'],1,''],
+['mediu','În ce limbaj este scris în mare parte nucleul Linux?',['Pascal','C','Java','Rust'],1,''],
+['greu','Ce complexitate are căutarea binară?',['O(n)','O(log n)','O(n²)','O(1)'],1,''],
+['greu','Care limbaj numără, în mod obișnuit, de la 1 (nu de la 0)?',['Lua','C','Python','Java'],0,''],
+['greu','Cât este sizeof(char) în C?',['0','1','2','depinde de calculator'],1,'Standardul spune mereu 1.']
+],qi=0,wr=0,score=0,lv={'ușor':'str','mediu':'ty','greu':'vr'};
 function ask(){
   var q=Q[qi],box=$('#ans');
-  $('#qn').textContent='test.py ('+(qi+1)+'/'+Q.length+')';
-  $('#q').innerHTML='<span class="fn">input</span>(<span class="str">"'+q.q+'"</span>)';
+  wr=0;$('#qn').textContent='test.py ('+(qi+1)+'/'+Q.length+') · '+score+' corecte';
+  $('#q').innerHTML='<span class="'+lv[q[0]]+'">['+q[0]+']</span> <span class="fn">input</span>(<span class="str">"'+q[1]+'"</span>)';
+  typeIn($('#q'),null,10);
+  if(anim)A({targets:'#pb',width:(qi/Q.length*100)+'%',duration:500,easing:'easeOutCubic'});else $('#pb').style.width=(qi/Q.length*100)+'%';
   $('#fb').textContent='';box.innerHTML='';
-  q.a.forEach(function(t,i){
+  q[2].forEach(function(t,i){
     var b=document.createElement('button');b.className='ans';
     b.innerHTML='<span class="op">['+'abcd'.charAt(i)+']</span> <span class="ty">'+t+'</span>';
     b.onclick=function(){pick(b,i)};box.appendChild(b);
   });
+  if(anim)A({targets:'#ans .ans',opacity:[0,1],translateX:[-12,0],delay:A.stagger(70),duration:300,easing:'easeOutCubic'});
 }
 function pick(b,i){
   var q=Q[qi];
-  if(i===q.c){
+  if(i===q[3]){if(!wr)score++;
     b.classList.add('ok');
-    $('#fb').innerHTML='<span class="ok b">✓ Corect!</span> '+q.ok;
+    $('#fb').innerHTML='<span class="ok b">✓ Corect!</span> '+q[4];typeIn($('#fb'),null,10);
     [].forEach.call(document.querySelectorAll('.ans'),function(x){x.disabled=true});
-    if(anim)A({targets:b,scale:[1,1.03,1],duration:400,easing:'easeInOutQuad'});
-    setTimeout(function(){qi++;if(qi<Q.length)ask();else go(2)},1600);
+    if(anim)A({targets:b,scale:[1,1.03,1],duration:400,easing:'easeInOutQuad'});burst(b);if(anim)A({targets:'#pb',width:((qi+1)/Q.length*100)+'%',duration:500,easing:'easeOutCubic'});
+    setTimeout(function(){if(cur!==1)return;qi++;if(qi<Q.length)ask();else go(2)},1700);
   }else{
-    b.classList.add('bad');b.disabled=true;
-    $('#fb').innerHTML='<span class="bad b">Eroare:</span> răspuns greșit, mai încercați.';
+    b.classList.add('bad');b.disabled=true;wr++;if(wr>=2)document.querySelectorAll('.ans')[q[3]].classList.add('hint');
+    $('#fb').innerHTML='<span class="bad b">Eroare:</span> răspuns greșit, mai încercați.';typeIn($('#fb'),null,10);
     if(anim)A({targets:b,translateX:[0,-8,8,-5,5,0],duration:350,easing:'linear'});
   }
 }
 
-/* ecranul 3: puzzle */
-var N=3,order=[],sel=-1,done=false;
-var svg="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#1b2330'/><stop offset='1' stop-color='#3a1d4a'/></linearGradient></defs><rect width='300' height='300' fill='url(#g)'/><text x='40' y='50' font-size='26' font-weight='700' fill='#c678dd' font-family='monospace'>{ }</text><text x='235' y='270' font-size='26' font-weight='700' fill='#56b6c2' font-family='monospace'>;</text><text x='150' y='135' font-size='72' text-anchor='middle'>🌷</text><text x='150' y='195' font-size='36' font-weight='700' fill='#98c379' text-anchor='middle' font-family='monospace'>8 Martie</text><text x='150' y='236' font-size='19' fill='#61afef' text-anchor='middle' font-family='monospace'>&lt;/La mulți ani&gt;</text></svg>";
-var img='url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
-function solved(){return order.every(function(v,i){return v===i})}
-function shuffle(){
-  order=[0,1,2,3,4,5,6,7,8];
-  do{for(var i=8;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=order[i];order[i]=order[j];order[j]=t}}while(solved());
-}
-function draw(){
-  var p=$('#puz');p.innerHTML='';
-  order.forEach(function(v,pos){
-    var d=document.createElement('button');
-    d.className='pc'+(pos===sel?' sel':'');
-    d.setAttribute('aria-label','Piesa '+(pos+1));
-    d.style.backgroundImage=img;
-    d.style.backgroundPosition=(v%N)*50+'% '+Math.floor(v/N)*50+'%';
-    d.onclick=function(){tap(pos)};
-    p.appendChild(d);
+/* ecranul 3: programul Pascal din blocuri */
+var PB=[['program Felicitare;','--kw'],['var an: integer;','--num'],['begin','--fn'],['an := 8;','--str'],["writeln('La mulți ani!');",'--str'],['end.','--fn'],['print("La mulți ani!");','--str']];
+var OK1='0,1,2,3,4,5',OK2='0,1,2,4,3,5',OK3='0,1,2,4,5',ans=[],bank=[],shuf=[];
+var pdone=false,drag=null;
+function blk(i){var b=document.createElement('button');b.className='blk';b.dataset.i=i;b.style.setProperty('--c','var('+PB[i][1]+')');b.innerHTML=hl(PB[i][0]);
+  b.addEventListener('pointerdown',function(e){dragStart(e,i,b)});
+  b.addEventListener('click',function(e){if(e.detail===0)tapMove(i)});b.addEventListener('contextmenu',function(e){e.preventDefault()});return b}
+function snap(){var o={};[].forEach.call(document.querySelectorAll('.blk'),function(b){o[b.dataset.i]=b.getBoundingClientRect()});return o}
+function drawP(old){
+  old=old||snap();
+  var s=$('#slots'),k=$('#bank');s.innerHTML='';k.innerHTML='';
+  if(!ans.length)s.innerHTML='<span class="cm">// atingeți sau țineți apăsat și trageți blocurile aici</span>';
+  ans.forEach(function(i){s.appendChild(blk(i))});
+  bank.forEach(function(i){k.appendChild(blk(i))});
+  if(!anim)return;
+  [].forEach.call(document.querySelectorAll('.blk'),function(b){
+    var o=old[b.dataset.i];if(!o)return;
+    var n=b.getBoundingClientRect(),dx=o.left-n.left,dy=o.top-n.top;
+    if(dx||dy)A({targets:b,translateX:[dx,0],translateY:[dy,0],duration:340,easing:'easeOutCubic'});
   });
 }
-function tap(pos){
-  if(done)return;
-  if(sel<0)sel=pos;
-  else if(sel===pos)sel=-1;
-  else{var t=order[sel];order[sel]=order[pos];order[pos]=t;sel=-1}
-  draw();
-  if(solved()){
-    done=true;$('#puz').classList.add('done');
-    $('#pz').innerHTML='<span class="ok b">✓ Puzzle rezolvat!</span> <span class="cm">// bravo 🎉</span>';
-    $('#pz').classList.remove('cm');
-    $('#next2').classList.remove('hide');
-    if(anim)A({targets:'#puz',scale:[1,1.04,1],duration:500,easing:'easeInOutQuad'});
+function moveBlk(i,idx){
+  var a=ans.indexOf(i);if(a>-1)ans.splice(a,1);
+  a=bank.indexOf(i);if(a>-1)bank.splice(a,1);
+  if(idx>=0)ans.splice(Math.min(idx,ans.length),0,i);else bank.push(i);
+}
+function tapMove(i){var old=snap();moveBlk(i,ans.indexOf(i)>-1?-1:ans.length);drawP(old)}
+function slotIndex(x,y){
+  var s=$('#slots'),r=s.getBoundingClientRect();
+  if(x<r.left-12||x>r.right+12||y<r.top-24||y>r.bottom+24)return -1;
+  var kids=[].filter.call(s.children,function(c){return c.classList.contains('blk')&&c!==drag.b}),idx=kids.length;
+  for(var j=0;j<kids.length;j++){var q=kids[j].getBoundingClientRect();if(y<q.top+q.height/2){idx=j;break}}
+  return idx;
+}
+function mark(idx){
+  var s=$('#slots'),m=s.querySelector('.insl');if(m)m.remove();
+  s.style.borderColor=idx>=0?'var(--ok)':'';
+  var ph=s.querySelector('.cm');if(ph)ph.style.display=idx>=0?'none':'';
+  if(idx<0)return;
+  var kids=[].filter.call(s.children,function(c){return c.classList.contains('blk')&&c!==drag.b}),l=document.createElement('div');
+  l.className='insl';s.insertBefore(l,kids[idx]||null);
+}
+function dragStart(e,i,b){
+  if(pdone||e.button>0)return;
+  var t=e.pointerType==='touch';
+  drag={i:i,b:b,x:e.clientX,y:e.clientY,on:false,idx:-1,armed:!t,tm:null};
+  if(t){var d0=drag;d0.tm=setTimeout(function(){d0.armed=true;d0.b.classList.add('armed');if(navigator.vibrate)try{navigator.vibrate(8)}catch(_){}},200)}
+  window.addEventListener('pointermove',dragMove);
+  window.addEventListener('pointerup',dragEnd);
+  window.addEventListener('pointercancel',dragEnd);
+}
+function dragMove(e){
+  var d=drag;if(!d)return;
+  if(!d.on){
+    if(Math.abs(e.clientX-d.x)+Math.abs(e.clientY-d.y)<8)return;
+    if(!d.armed){clearTimeout(d.tm);dragUnbind();drag=null;return}
+    d.on=true;var r=d.b.getBoundingClientRect();d.dx=d.x-r.left;d.dy=d.y-r.top;
+    var c=d.b.cloneNode(true);c.className='blk fly';c.style.width=r.width+'px';document.body.appendChild(c);d.c=c;
+    d.b.style.opacity=.25;
+    if(anim)A({targets:c,scale:[1,1.05],duration:160,easing:'easeOutCubic'});
   }
+  d.c.style.left=(e.clientX-d.dx)+'px';d.c.style.top=(e.clientY-d.dy)+'px';
+  var ix=slotIndex(e.clientX,e.clientY);
+  if(ix!==d.idx||!$('#slots .insl')&&ix>=0){d.idx=ix;mark(ix)}
+}
+function dragUnbind(){
+  window.removeEventListener('pointermove',dragMove);
+  window.removeEventListener('pointerup',dragEnd);
+  window.removeEventListener('pointercancel',dragEnd);
+}
+document.addEventListener('touchmove',function(e){if(drag&&drag.armed&&e.cancelable)e.preventDefault()},{passive:false});
+function dragEnd(e){
+  dragUnbind();
+  var d=drag;drag=null;if(!d)return;
+  clearTimeout(d.tm);d.b.classList.remove('armed');
+  if(!d.on){if(!e||e.type!=='pointercancel')tapMove(d.i);return}
+  var m=$('#slots .insl');if(m)m.remove();$('#slots').style.borderColor='';
+  var old=snap();old[d.i]=d.c.getBoundingClientRect();d.c.remove();
+  moveBlk(d.i,d.idx);drawP(old);
+}
+function initP(){shuf=[0,1,2,3,4,5,6].sort(function(){return Math.random()-.5});bank=shuf.slice();ans=[];drawP()}
+$('#chk').onclick=function(){
+  var f=$('#pres'),r=ans.join(',');
+  if(/^0,(1,2,(4|3,4|4,3)|2,4),5$/.test(r)){pdone=true;
+    $('#chk').classList.add('hide');$('#next2').classList.remove('hide');
+    f.innerHTML='<span class="ok b">✓ Compilare reușită</span>\n<span class="cm">$ ./felicitare</span>\n<span class="str">La mulți ani!</span>';f.style.whiteSpace='pre-wrap';typeIn(f,null,16);burst($('#slots'));if(anim)A({targets:'#slots',borderColor:['#252b36','#98c379'],duration:500,easing:'linear'});
+  }else{
+    f.innerHTML='<span class="bad b">Eroare de compilare:</span> <span class="cm">verificați ordinea și intrusul.</span>';typeIn(f,null,10);
+    if(anim)A({targets:'#slots',translateX:[0,-8,8,-5,5,0],duration:350,easing:'linear'});
+  }
+};
+
+/* ecranul 4: felicitarea în C */
+var CODE='#include <stdio.h>\n\nint main(void) {\n    printf("Dumneavoastră sunteți la fel de frumoasă ca sintaxa Python-ului și la fel de elegantă ca limbajul C. Vă felicităm cu ocazia zilei de 8 Martie!\\n");\n    return 0;\n}\n\n';
+function finale(){
+  var o=$('#out');
+  o.innerHTML=hl(CODE);o.classList.add('cur');
+  o.onclick=function(){o._skip&&o._skip()};
+  typeIn(o,function(){var ok=document.createElement('span');ok.className='ok';ok.textContent='✓ Compilare reușită';o.appendChild(ok);if(anim)A({targets:ok,opacity:[0,1],duration:500,easing:'linear'});$('#again').classList.remove('hide');if(navigator.share)$('#share').classList.remove('hide');
+    if(anim){
+      A({targets:'#sticker',opacity:[0,1],scale:[.3,1],rotate:[-25,-6],duration:900,easing:'easeOutElastic(1,.6)',complete:function(){A({targets:'#sticker',rotate:[-6,0],direction:'alternate',loop:true,duration:1500,easing:'easeInOutSine'})}});
+      A({targets:'#sig',opacity:[0,1],duration:800,delay:300,easing:'linear'});burst($('#sticker'));rain();
+    }else{$('#sticker').style.opacity=1;$('#sig').style.opacity=1}
+  },6);
 }
 
-/* ecranul 4: felicitarea, colorată ca într-un IDE */
-var TOK=[
- ['cm','// La mulți ani, doamnă dirigintă!\n'],
- ['kw','const'],['',' '],['vr','mesaj'],['',' '],['op','='],['',' '],
- ['str','"Dumneavoastră sunteți la fel de frumoasă ca sintaxa '],['ty','Python'],
- ['str','-ului și la fel de elegantă ca '],['ty','JavaScript'],
- ['str','-ul. Vă felicităm cu ocazia zilei de '],['num','8 Martie'],['str','!"'],['','; \n'],
- ['ty','console'],['','.'],['fn','log'],['','('],['vr','mesaj'],['',');\n\n'],
- ['ok','✓ Compilare reușită ']
-];
-var pd=false;
-function petals(){
-  if(pd||!anim)return;pd=true;
-  var sy=[['🌷',''],['🌼',''],['{','kw'],['}','str'],['</>','fn'],[';','num'],['01','op']];
+function stopFx(){
+  if(anim){A.remove('.rn');A.remove('#sticker')}
+  [].forEach.call(document.querySelectorAll('.rn'),function(x){x.remove()});rd=false;
+}
+function resetFinale(){
+  stopFx();var st=$('#sticker'),o=$('#out');
+  st.style.opacity='';st.style.transform='';$('#sig').style.opacity='';
+  $('#again').classList.add('hide');$('#share').classList.add('hide');
+  o.classList.remove('cur');o.innerHTML='';
+}
+function enter(n){
+  var ts=[].slice.call(S[n].querySelectorAll('.t'));
+  if(anim)A({targets:S[n].querySelector('.win'),opacity:[0,1],translateY:[24,0],scale:[.97,1],duration:500,easing:'easeOutCubic'});
+  if(n===0){$('#start').classList.add('hide');seq(ts,function(){startLoop(function(){$('#start').classList.remove('hide')})})}
+  else if(n===1){qi=0;score=0;seq(ts,ask)}
+  else if(n===2){
+    pdone=false;initP();$('#chk').classList.remove('hide');$('#next2').classList.add('hide');$('#pres').textContent='';
+    $('#slots').style.opacity=0;$('#bank').style.opacity=0;
+    seq(ts,function(){$('#slots').style.opacity=1;$('#bank').style.opacity=1;if(anim)A({targets:'#bank .blk',opacity:[0,1],translateY:[16,0],delay:A.stagger(70),duration:350,easing:'easeOutBack'})})}
+  else{resetFinale();seq(ts,finale)}
+}
+
+/* animații: explozie de simboluri și ploaie de cod */
+function burst(el){
+  if(!anim)return;
+  var r=el.getBoundingClientRect(),sy=['{','}',';','</>','🌷','✓','01','🌼'];
+  for(var i=0;i<20;i++){
+    var s=document.createElement('span');s.textContent=sy[i%sy.length];
+    s.style.cssText='position:fixed;z-index:6;pointer-events:none;font-weight:700;left:'+(r.left+r.width/2)+'px;top:'+(r.top+r.height/2)+'px;color:'+['var(--fn)','var(--kw)','var(--ty)','var(--str)'][i%4]+'';
+    document.body.appendChild(s);
+    (function(s){A({targets:s,translateX:A.random(-130,130),translateY:A.random(-130,60),rotate:A.random(-90,90),opacity:[1,0],duration:A.random(700,1100),easing:'easeOutCubic',complete:function(){s.remove()}})})(s);
+  }
+}
+var rd=false;
+function rain(){
+  if(rd||!anim)return;rd=true;
+  var sy=['{','}',';','</>','🌷','🌼','01'];
   for(var k=0;k<14;k++){
-    var s=document.createElement('span'),x=sy[k%sy.length];
-    s.className='petal '+x[1];s.textContent=x[0];s.style.left=Math.random()*92+'%';
+    var s=document.createElement('span');s.className='rn';s.textContent=sy[k%sy.length];
+    s.style.cssText='position:fixed;top:0;z-index:2;pointer-events:none;font-weight:700;font-size:20px;transform:translateY(-10vh);left:'+Math.random()*92+'%;color:'+['var(--fn)','var(--kw)','var(--ty)','var(--str)'][k%4]+'';
     document.body.appendChild(s);
   }
-  A({targets:'.petal',translateY:['-10vh','110vh'],translateX:function(){return A.random(-40,40)},rotate:function(){return A.random(-60,60)},duration:function(){return A.random(7000,12000)},delay:function(){return A.random(0,5000)},loop:true,easing:'linear'});
+  A({targets:'.rn',translateY:['-10vh','110vh'],translateX:function(){return A.random(-40,40)},rotate:function(){return A.random(-60,60)},duration:function(){return A.random(7000,12000)},delay:function(){return A.random(0,5000)},loop:true,easing:'linear'});
 }
-function finale(){
-  var o=$('#out'),ti=0,ci=0,span=null,fin=false,t;
-  function end(){
-    if(fin)return;fin=true;clearTimeout(t);
-    o.innerHTML='';
-    TOK.forEach(function(k){var s=document.createElement('span');s.className=k[0];s.textContent=k[1];o.appendChild(s)});
-    o.classList.add('cur');
-    if(anim){
-      A({targets:'#sticker',opacity:[0,1],scale:[.3,1],rotate:[-25,-6],duration:900,easing:'easeOutElastic(1,.6)'});
-      A({targets:'#sig',opacity:[0,1],duration:800,delay:300,easing:'linear'});
-    }else{$('#sticker').style.opacity=1;$('#sig').style.opacity=1}
-    petals();
+
+/* tranziție în stil terminal: "make ecran_N" cu bară de progres */
+function go(n){
+  if(busy)return;busy=true;
+  var tr=$('#tr'),t=$('#trt'),o={p:0};
+  function fin(){
+    clearInterval(loopT);clearInterval(mT);gen++;stopFx();
+    [].forEach.call(document.querySelectorAll('.typing'),function(x){x.classList.remove('typing')});
+    S[cur].classList.remove('on');S[n].classList.add('on');cur=n;S[n].scrollTop=0;enter(n);
+    if(anim)A({targets:tr,opacity:0,duration:250,easing:'linear',complete:function(){tr.style.display='none';busy=false}});
+    else{tr.style.display='none';busy=false}
   }
-  function step(){
-    if(ti>=TOK.length){end();return}
-    var k=TOK[ti];
-    if(ci===0){span=document.createElement('span');span.className=k[0];o.appendChild(span)}
-    span.textContent+=k[1].charAt(ci);ci++;
-    if(ci>=k[1].length){ti++;ci=0}
-    t=setTimeout(step,22);
-  }
-  if(!anim){end();return}
-  o.innerHTML='';o.onclick=end;step();
+  if(!anim){fin();return}
+  tr.style.display='flex';tr.style.opacity=0;
+  A({targets:S[cur].querySelector('.win'),translateX:[0,-7,7,-4,4,0],opacity:[1,.55,1,.4,.8,1],duration:300,easing:'linear'});
+  A({targets:tr,opacity:1,duration:150,easing:'linear'});
+  A({targets:o,p:100,duration:750,round:1,easing:'easeInOutQuad',
+    update:function(){var f=Math.round(o.p/10);t.innerHTML='<span class="ok">$</span> make ecran_'+(n+1)+'\n<span class="fn">['+'#'.repeat(f)+'-'.repeat(10-f)+']</span> '+o.p+'%\n<span class="dim">0x'+(((Math.random()*0xffffff)|0).toString(16))+'</span>'+(o.p>25?'\n<span class="ok">✔</span> compile':'')+(o.p>55?'\n<span class="ok">✔</span> link':'')+(o.p>85?'\n<span class="ok">✔</span> test':'')},
+    complete:fin});
 }
 
 $('#start').onclick=function(){go(1)};
 $('#next2').onclick=function(){go(3)};
-ask();shuffle();draw();intro();
+var pr=0;document.addEventListener('pointermove',function(e){if(!anim||drag)return;cancelAnimationFrame(pr);pr=requestAnimationFrame(function(){$('#bg').style.transform='translate('+((e.clientX/innerWidth-.5)*-16)+'px,'+((e.clientY/innerHeight-.5)*-16)+'px)'})});
+document.addEventListener('visibilitychange',function(){var a=window.bgA;if(a)document.hidden?a.pause():a.play()});
+$('#again').onclick=function(){go(0)};
+$('#share').onclick=function(){var u=/^https?:/.test(location.href)?location.href:undefined;try{navigator.share({title:document.title,text:'La mulți ani de 8 Martie! 🌷',url:u}).catch(function(){})}catch(_){}};
+function back(){if(cur>0&&!busy&&!drag)go(cur-1)}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'||e.key==='ArrowLeft')back()});
+[].forEach.call(document.querySelectorAll('.screen:not(#s0) .bar i:first-child'),function(i){i.onclick=back});
+enter(0);
 })();
 </script>
 </body>
