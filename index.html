@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>La mulți ani de 8 Martie!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#07090c;--win:#0f1218;--line:#252b36;--ink:#abb2bf;--dim:#7f8794;
 --kw:#c678dd;--str:#98c379;--fn:#61afef;--num:#d19a66;--ty:#e5c07b;--vr:#e06c75;--op:#56b6c2;--ok:#98c379;--bad:#e06c75;
@@ -59,7 +59,7 @@ button:focus-visible{outline:2px solid var(--fn);outline-offset:2px}
 #trt{margin:0;font:inherit}
 @media (prefers-reduced-motion: reduce){.cur::after,.btn{animation:none}}
 .prog{font-size:12px;min-height:15em;overflow-x:auto}
-.blk{touch-action:pan-y;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none;transition:border-color .15s}
+.blk{touch-action:none;user-select:none;-webkit-user-select:none;transition:border-color .15s}
 .blk:active{transform:none}
 .blk.fly{position:fixed;z-index:7;margin:0;pointer-events:none;box-shadow:0 10px 24px rgba(0,0,0,.55);border-color:var(--fn)}
 .insl{height:3px;border-radius:2px;background:var(--ok);box-shadow:0 0 8px var(--ok)}
@@ -87,27 +87,41 @@ h1{animation:none}
 #s3 .sticker{width:96px}
 #s3 .sig{letter-spacing:.3px}
 @media (prefers-reduced-motion: reduce){#s0 h1::after{animation:none}}
-.blk.armed{border-color:var(--fn);transform:scale(1.02)}
-.screen:not(#s0) .bar i:first-child{position:relative;cursor:pointer}
-.screen:not(#s0) .bar i:first-child::after{content:"";position:absolute;inset:-12px}
-.sig{font-family:"Caveat","Segoe Script",cursive;font-style:normal;font-size:21px}
+#tr{flex-direction:column;gap:16px;padding:0 16px}
+.abox{padding:0}
+#lgo{display:block;opacity:.5}
+.bar i{cursor:pointer;position:relative}
+.bar i::after{content:"";position:absolute;inset:-8px}
+.bar i:hover{filter:brightness(1.3)}
+.screen.min{pointer-events:none}
+.screen.min .win{visibility:hidden}
+#bg .lg,#bg .sy{transition:opacity .5s}
+#bg .lg::after,#bg .sy::after{content:"";position:absolute;inset:-9px}
+body.mini #bg .lg,body.mini #bg .sy{pointer-events:auto;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+body.mini #bg .lg{opacity:.85}
+body.mini #bg .sy{opacity:.7}
+#dock{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:8;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 16px 8px;background:rgba(30,36,48,.55);border:1px solid var(--line);border-radius:20px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#dk{position:relative;width:48px;height:60px;padding:0 0 8px;display:flex;align-items:flex-end;justify-content:center;border:1px solid #3a4558;border-radius:6px 14px 6px 6px;background:linear-gradient(#2a3342,#171c26);color:var(--ty);font-weight:700;font-size:13px;cursor:pointer}
+#dk::before{content:"";position:absolute;top:-1px;right:-1px;width:15px;height:15px;background:#3a4558;border-radius:0 12px 0 6px}
+.dkl{font-size:10px;color:var(--dim)}
+#hint{position:fixed;top:max(14px,env(safe-area-inset-top,0px));left:0;right:0;padding:0 16px;text-align:center;z-index:8;pointer-events:none;opacity:0;transition:opacity .5s;font-size:11px}
+body.mini #hint{opacity:1}
 </style>
 </head>
 <body>
 <div id="bg" aria-hidden="true"></div>
-
+ 
 <section class="screen on" id="s0"><div class="win">
   <div class="bar"><i></i><i></i><i></i><span>clasa11@8martie: ~</span></div>
   <div class="body">
-    <p class="pl t" data-cmd="cat README.md"></p>
     <h1 class="t">La mulți ani!</h1>
     <p class="cm t">// Stimată doamnă dirigintă, clasa a XI-a a pregătit pentru Dumneavoastră o surpriză scrisă în cod.</p>
     <p class="cm" id="lang">&nbsp;</p>
     <pre class="prog" id="prog"></pre>
-    <button class="btn hide" id="start">$ chmod +x surpriza &amp;&amp; ./surpriza</button>
+    <button class="btn hide" id="start">$ ./surpriza</button>
   </div>
 </div></section>
-
+ 
 <section class="screen" id="s1"><div class="win">
   <div class="bar"><i></i><i></i><i></i><span id="qn">test.py</span></div>
   <div class="body">
@@ -118,12 +132,12 @@ h1{animation:none}
     <p class="fb" id="fb"></p>
   </div>
 </div></section>
-
+ 
 <section class="screen" id="s2"><div class="win">
   <div class="bar"><i></i><i></i><i></i><span>felicitare.pas</span></div>
   <div class="body">
     <p class="pl t" data-cmd="fpc felicitare.pas"></p>
-    <p class="cm t">// Alcătuiți programul Pascal: atingeți sau trageți (pe telefon, țineți apăsat puțin) blocurile în ordinea corectă. Blocul an := 8; este opțional, dar unul dintre blocuri nu aparține limbajului Pascal!</p>
+    <p class="cm t">// Alcătuiți programul Pascal: atingeți sau trageți blocurile în ordinea corectă. Blocul an := 8; este opțional, dar unul dintre blocuri nu aparține limbajului Pascal!</p>
     <div class="slots" id="slots"></div>
     <div class="bank" id="bank"></div>
     <p class="fb" id="pres"></p>
@@ -131,7 +145,7 @@ h1{animation:none}
     <button class="btn hide" id="next2">$ ./felicitare</button>
   </div>
 </div></section>
-
+ 
 <section class="screen" id="s3"><div class="win">
   <div class="bar"><i></i><i></i><i></i><span>felicitare.c</span></div>
   <div class="body">
@@ -144,26 +158,27 @@ h1{animation:none}
       <text x="100" y="152" font-size="14" text-anchor="middle" fill="#0b0d10" font-family="monospace">exit code 0</text>
     </svg>
     <p class="cm sig" id="sig">// — elevii clasei a XI-a</p>
-    <button class="btn hide" id="share">$ ./trimite</button>
     <button class="btn hide" id="again">$ ./reia</button>
   </div>
 </div></section>
-
-<div id="tr"><pre id="trt"></pre></div>
-
+ 
+<div id="hint" class="cm">// trageți simbolurile din fundal · atingeți fișierul din dock ca să redeschideți fereastra</div>
+<div id="dock" class="hide"><button id="dk" aria-label="Redeschide fereastra"><span id="dkx">.py</span></button><span class="dkl" id="dkn">surpriza.py</span></div>
+<div id="tr"><pre id="trt"></pre><div class="abox"><canvas id="lgo" aria-hidden="true"></canvas></div></div>
+ 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script>
 (function(){
 var A=window.anime,anim=!!A&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var $=function(s){return document.querySelector(s)},S=[].slice.call(document.querySelectorAll('.screen')),cur=0,busy=false,loopT=null,mT=null,gen=0;
-
+var $=function(s){return document.querySelector(s)},S=[].slice.call(document.querySelectorAll('.screen')),cur=0,busy=false,loopT=null,mT=null;
+ 
 /* colorare de sintaxă (comună pentru toate limbajele) */
 function hl(s){
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(
   /(\/\/.*|--.*)|("(?:[^"\\]|\\.)*"|'[^']*')|(#include\s+&lt;.*?&gt;)|(\b\d+\b)|(\b(?:def|fn|let|const|var|func|function|int|void|return|begin|end|program|integer|class|public|static|if|then|else|for|while|import|use|using|main|select|from|as|display|text|trace|type|val|string|do|of)\b)|(\b[A-Za-z_][\w.:]*(?=\())/gi,
   function(m,a,b,c,d,e){return '<span class="'+(a?'dim':b?'str':c?'kw':d?'num':e?'kw':'fn')+'">'+m+'</span>'});
 }
-
+ 
 /* text scris ca în terminal: păstrează culorile (parcurge nodurile de text) */
 function typeIn(el,cb,sp){
   var w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),ns=[],n,fin=false;
@@ -171,10 +186,10 @@ function typeIn(el,cb,sp){
   function done(){if(fin)return;fin=true;el.classList.remove('typing');cb&&cb()}
   if(!anim){done();return}
   ns.forEach(function(x){x[0].data=''});
-  var i=0,c=0,stop=false,g=gen;
+  var i=0,c=0,stop=false;
   el.classList.add('typing');el._skip=function(){stop=true;ns.forEach(function(x){x[0].data=x[1]});done()};
   (function s(){
-    if(stop||g!==gen)return;
+    if(stop)return;
     if(i>=ns.length){done();return}
     var x=ns[i];c++;x[0].data=x[1].slice(0,c);
     if(c>=x[1].length){i++;c=0}
@@ -182,13 +197,13 @@ function typeIn(el,cb,sp){
   })();
 }
 function seq(els,cb){var i=0;(function n(){if(i>=els.length){cb&&cb();return}typeIn(els[i++],n)})()}
-
+ 
 /* prompt de terminal */
 [].forEach.call(document.querySelectorAll('[data-cmd]'),function(el){
   var c=el.getAttribute('data-cmd').split(' '),f=c.shift();
   el.innerHTML='<span class="ok b">clasa11@8martie</span><span>:</span><span class="fn b">~</span><span>$ </span><span class="fn">'+f+'</span> <span class="op">'+c.join(' ')+'</span>';
 });
-
+ 
 /* limbajele: nume | extensie | cod */
 var LG=[
 `Python|py|mesaj = "§"\nprint(mesaj)`,
@@ -234,16 +249,72 @@ var LG=[
 `Smalltalk|st|| mesaj |\nmesaj := '§'.\nTranscript show: mesaj; cr.`,
 `Ada|adb|with Ada.Text_IO; use Ada.Text_IO;\n\nprocedure Felicitare is\n  Mesaj : String := "§";\nbegin\n  Put_Line (Mesaj);\nend Felicitare;`
 ].map(function(s){var p=s.split('|');return [p[0],p[1],p.slice(2).join('|').replace(/§/g,'La mulți ani!')]});
-
+ 
 /* fundal: "logo-uri" ale limbajelor (etichete colorate) + simboluri mici */
 (function(){
   var bg=$('#bg'),sy=['{ }',';','</>','01','()','[]','=>','::'];
   function put(c,t,css){var d=document.createElement('span');d.className=c;d.textContent=t;d.style.cssText=css;bg.appendChild(d)}
   LG.forEach(function(l,i){var h=['var(--fn)','var(--kw)','var(--ty)'][i%3];put('lg','.'+l[1],'left:'+(Math.random()*88)+'%;top:'+(Math.random()*94)+'%;color:'+h+';border-color:'+h+'')});
-  for(var i=0;i<26;i++)put('sy'+(i<10?' mv':''),sy[i%sy.length],'left:'+(Math.random()*94)+'%;top:'+(Math.random()*96)+'%;font-size:'+(11+Math.random()*12)+'px;color:'+['var(--fn)','var(--kw)','var(--ty)'][i%3]+'');
-  window.bgA=anim&&A({targets:'#bg .sy.mv',translateY:function(){return A.random(-30,30)},translateX:function(){return A.random(-14,14)},rotate:function(){return A.random(-14,14)},opacity:function(){return A.random(14,55)/100},direction:'alternate',loop:true,duration:function(){return A.random(3500,7000)},easing:'easeInOutSine'});
+  for(var i=0;i<26;i++)put('sy',sy[i%sy.length],'left:'+(Math.random()*94)+'%;top:'+(Math.random()*96)+'%;font-size:'+(11+Math.random()*12)+'px;color:'+['var(--fn)','var(--kw)','var(--ty)'][i%3]+'');
+  (function(){
+  var els=[].slice.call(bg.children),W=innerWidth,H=innerHeight,B=[];
+  els.forEach(function(el){
+    var x=parseFloat(el.style.left)/100*W,y=parseFloat(el.style.top)/100*H,r=el.getBoundingClientRect(),a=Math.random()*6.28,sp=8+Math.random()*10;
+    el.style.left='0';el.style.top='0';
+    B.push({el:el,x:x,y:y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,bs:sp,w:r.width,h:r.height,rot:Math.random()*40-20,vr:(Math.random()-.5)*8,d:false});
+  });
+  function put(p){p.el.style.transform='translate3d('+p.x+'px,'+p.y+'px,0) rotate('+p.rot+'deg)'}
+  B.forEach(put);
+  if(!anim)return;
+  var last=0;
+  function step(t){
+    var dt=Math.min((t-last)/1000||.016,.05);last=t;W=innerWidth;H=innerHeight;
+    B.forEach(function(p){
+      if(p.d)return;
+      p.x+=p.vx*dt;p.y+=p.vy*dt;p.rot+=p.vr*dt;
+      var sp=Math.hypot(p.vx,p.vy)||1;
+      if(sp>p.bs){var k=(p.bs+(sp-p.bs)*Math.pow(.3,dt))/sp;p.vx*=k;p.vy*=k}
+      else if(sp<p.bs*.6){p.vx+=(Math.random()-.5)*20*dt;p.vy+=(Math.random()-.5)*20*dt}
+      if(p.x<0){p.x=0;p.vx=Math.abs(p.vx)}if(p.x>W-p.w){p.x=W-p.w;p.vx=-Math.abs(p.vx)}
+      if(p.y<0){p.y=0;p.vy=Math.abs(p.vy)}if(p.y>H-p.h){p.y=H-p.h;p.vy=-Math.abs(p.vy)}
+    });
+    for(var i=0;i<B.length;i++)for(var j=i+1;j<B.length;j++){
+      var a=B[i],b=B[j],dx=(b.x+b.w/2)-(a.x+a.w/2),dy=(b.y+b.h/2)-(a.y+a.h/2),m=(Math.max(a.w,a.h)+Math.max(b.w,b.h))*.3,d2=dx*dx+dy*dy;
+      if(d2<m*m&&d2>.01){
+        var d=Math.sqrt(d2),nx=dx/d,ny=dy/d,o=(m-d)/2,rv=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;
+        if(!a.d){a.x-=nx*o;a.y-=ny*o}if(!b.d){b.x+=nx*o;b.y+=ny*o}
+        if(rv<0){var im=-rv*.9;if(!a.d){a.vx-=nx*im;a.vy-=ny*im}if(!b.d){b.vx+=nx*im;b.vy+=ny*im}}
+      }
+    }
+    B.forEach(put);
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+  B.forEach(function(p){
+    var ox=0,oy=0,lx=0,ly=0,lt=0;
+    p.el.addEventListener('pointerdown',function(e){
+      if(!document.body.classList.contains('mini'))return;
+      p.d=true;p.vx=p.vy=0;ox=e.clientX-p.x;oy=e.clientY-p.y;lx=e.clientX;ly=e.clientY;lt=performance.now();
+      try{p.el.setPointerCapture(e.pointerId)}catch(_){}
+      e.preventDefault();
+    });
+    p.el.addEventListener('pointermove',function(e){
+      if(!p.d)return;
+      var now=performance.now(),dt=Math.max((now-lt)/1000,.001);
+      p.x=Math.max(0,Math.min(innerWidth-p.w,e.clientX-ox));p.y=Math.max(0,Math.min(innerHeight-p.h,e.clientY-oy));
+      p.vx=.6*p.vx+.4*(e.clientX-lx)/dt;p.vy=.6*p.vy+.4*(e.clientY-ly)/dt;
+      lx=e.clientX;ly=e.clientY;lt=now;
+    });
+    function up(){
+      if(!p.d)return;p.d=false;
+      if(performance.now()-lt>90)p.vx=p.vy=0;
+      var sp=Math.hypot(p.vx,p.vy);if(sp>900){p.vx*=900/sp;p.vy*=900/sp}
+    }
+    p.el.addEventListener('pointerup',up);p.el.addEventListener('pointercancel',up);
+  });
 })();
-
+})();
+ 
 /* ecranul 1: programul se transformă dintr-un limbaj în altul */
 var li=0;
 function E(c){return c==='<'?'&lt;':c==='>'?'&gt;':c==='&'?'&amp;':c}
@@ -253,22 +324,22 @@ function morph(el,txt){
   var len=txt.length,k=0,ch='!<>-_/[]{}=+*^?#01';
   mT=setInterval(function(){
     k+=Math.ceil(len/14);var o='';
-    for(var i=k;i<len;i++){var c=txt.charAt(i);o+=(c==='\n'||c===' ')?c:'<span class="dim">'+E(ch.charAt(Math.floor(Math.random()*ch.length)))+'</span>'}
-    el.innerHTML=hl(txt.slice(0,k))+o;
+    for(var i=0;i<len;i++){var c=txt.charAt(i);o+=(i<k||c==='\n'||c===' ')?E(c):'<span class="'+['kw','str','fn','num','op'][i%5]+'">'+E(ch.charAt(Math.floor(Math.random()*ch.length)))+'</span>'}
+    el.innerHTML=o;
     if(k>=len){clearInterval(mT);el.innerHTML=hl(txt)}
   },35);
 }
 var firstCb=null;
 function showLang(first){
   var L=LG[li],p=$('#prog');
-  $('#lang').textContent='// limbaj '+(li+1)+'/'+LG.length+': '+L[0]+' (.'+L[1]+')';
+  $('#lang').textContent='// limbaj '+(li+1)+'/'+LG.length+': '+L[0]+' (.'+L[1]+')';curExt=L[1];dockExt();
   if(first||!anim){p.innerHTML=hl(L[2]);if(first)typeIn(p,firstCb,5);else if(firstCb)firstCb()}else morph(p,L[2]);
 }
 function startLoop(cb){
   firstCb=cb;showLang(true);
-  if(anim)loopT=setInterval(function(){li=(li+1)%LG.length;showLang(false)},7000);
+  if(anim)loopT=setInterval(function(){li=(li+1)%LG.length;showLang(false)},5500);
 }
-
+ 
 /* ecranul 2: întrebări (ușor / mediu / greu) */
 var Q=[
 ['ușor','Care limbaj are cea mai frumoasă sintaxă?',['C++','Assembler','Python','Bash'],2,'La fel de frumoasă ca Dumneavoastră.'],
@@ -304,26 +375,26 @@ function pick(b,i){
     $('#fb').innerHTML='<span class="ok b">✓ Corect!</span> '+q[4];typeIn($('#fb'),null,10);
     [].forEach.call(document.querySelectorAll('.ans'),function(x){x.disabled=true});
     if(anim)A({targets:b,scale:[1,1.03,1],duration:400,easing:'easeInOutQuad'});burst(b);if(anim)A({targets:'#pb',width:((qi+1)/Q.length*100)+'%',duration:500,easing:'easeOutCubic'});
-    setTimeout(function(){if(cur!==1)return;qi++;if(qi<Q.length)ask();else go(2)},1700);
+    setTimeout(function(){qi++;if(qi<Q.length)ask();else go(2)},1700);
   }else{
     b.classList.add('bad');b.disabled=true;wr++;if(wr>=2)document.querySelectorAll('.ans')[q[3]].classList.add('hint');
     $('#fb').innerHTML='<span class="bad b">Eroare:</span> răspuns greșit, mai încercați.';typeIn($('#fb'),null,10);
     if(anim)A({targets:b,translateX:[0,-8,8,-5,5,0],duration:350,easing:'linear'});
   }
 }
-
+ 
 /* ecranul 3: programul Pascal din blocuri */
 var PB=[['program Felicitare;','--kw'],['var an: integer;','--num'],['begin','--fn'],['an := 8;','--str'],["writeln('La mulți ani!');",'--str'],['end.','--fn'],['print("La mulți ani!");','--str']];
 var OK1='0,1,2,3,4,5',OK2='0,1,2,4,3,5',OK3='0,1,2,4,5',ans=[],bank=[],shuf=[];
 var pdone=false,drag=null;
 function blk(i){var b=document.createElement('button');b.className='blk';b.dataset.i=i;b.style.setProperty('--c','var('+PB[i][1]+')');b.innerHTML=hl(PB[i][0]);
   b.addEventListener('pointerdown',function(e){dragStart(e,i,b)});
-  b.addEventListener('click',function(e){if(e.detail===0)tapMove(i)});b.addEventListener('contextmenu',function(e){e.preventDefault()});return b}
+  b.addEventListener('click',function(e){if(e.detail===0)tapMove(i)});return b}
 function snap(){var o={};[].forEach.call(document.querySelectorAll('.blk'),function(b){o[b.dataset.i]=b.getBoundingClientRect()});return o}
 function drawP(old){
   old=old||snap();
   var s=$('#slots'),k=$('#bank');s.innerHTML='';k.innerHTML='';
-  if(!ans.length)s.innerHTML='<span class="cm">// atingeți sau țineți apăsat și trageți blocurile aici</span>';
+  if(!ans.length)s.innerHTML='<span class="cm">// trageți sau atingeți blocurile ca să le adăugați aici</span>';
   ans.forEach(function(i){s.appendChild(blk(i))});
   bank.forEach(function(i){k.appendChild(blk(i))});
   if(!anim)return;
@@ -356,9 +427,7 @@ function mark(idx){
 }
 function dragStart(e,i,b){
   if(pdone||e.button>0)return;
-  var t=e.pointerType==='touch';
-  drag={i:i,b:b,x:e.clientX,y:e.clientY,on:false,idx:-1,armed:!t,tm:null};
-  if(t){var d0=drag;d0.tm=setTimeout(function(){d0.armed=true;d0.b.classList.add('armed');if(navigator.vibrate)try{navigator.vibrate(8)}catch(_){}},200)}
+  drag={i:i,b:b,x:e.clientX,y:e.clientY,on:false,idx:-1};
   window.addEventListener('pointermove',dragMove);
   window.addEventListener('pointerup',dragEnd);
   window.addEventListener('pointercancel',dragEnd);
@@ -367,7 +436,6 @@ function dragMove(e){
   var d=drag;if(!d)return;
   if(!d.on){
     if(Math.abs(e.clientX-d.x)+Math.abs(e.clientY-d.y)<8)return;
-    if(!d.armed){clearTimeout(d.tm);dragUnbind();drag=null;return}
     d.on=true;var r=d.b.getBoundingClientRect();d.dx=d.x-r.left;d.dy=d.y-r.top;
     var c=d.b.cloneNode(true);c.className='blk fly';c.style.width=r.width+'px';document.body.appendChild(c);d.c=c;
     d.b.style.opacity=.25;
@@ -377,17 +445,12 @@ function dragMove(e){
   var ix=slotIndex(e.clientX,e.clientY);
   if(ix!==d.idx||!$('#slots .insl')&&ix>=0){d.idx=ix;mark(ix)}
 }
-function dragUnbind(){
+function dragEnd(){
   window.removeEventListener('pointermove',dragMove);
   window.removeEventListener('pointerup',dragEnd);
   window.removeEventListener('pointercancel',dragEnd);
-}
-document.addEventListener('touchmove',function(e){if(drag&&drag.armed&&e.cancelable)e.preventDefault()},{passive:false});
-function dragEnd(e){
-  dragUnbind();
   var d=drag;drag=null;if(!d)return;
-  clearTimeout(d.tm);d.b.classList.remove('armed');
-  if(!d.on){if(!e||e.type!=='pointercancel')tapMove(d.i);return}
+  if(!d.on){tapMove(d.i);return}
   var m=$('#slots .insl');if(m)m.remove();$('#slots').style.borderColor='';
   var old=snap();old[d.i]=d.c.getBoundingClientRect();d.c.remove();
   moveBlk(d.i,d.idx);drawP(old);
@@ -395,7 +458,7 @@ function dragEnd(e){
 function initP(){shuf=[0,1,2,3,4,5,6].sort(function(){return Math.random()-.5});bank=shuf.slice();ans=[];drawP()}
 $('#chk').onclick=function(){
   var f=$('#pres'),r=ans.join(',');
-  if(/^0,(1,2,(4|3,4|4,3)|2,4),5$/.test(r)){pdone=true;
+  if(r===OK1||r===OK2||r===OK3){pdone=true;
     $('#chk').classList.add('hide');$('#next2').classList.remove('hide');
     f.innerHTML='<span class="ok b">✓ Compilare reușită</span>\n<span class="cm">$ ./felicitare</span>\n<span class="str">La mulți ani!</span>';f.style.whiteSpace='pre-wrap';typeIn(f,null,16);burst($('#slots'));if(anim)A({targets:'#slots',borderColor:['#252b36','#98c379'],duration:500,easing:'linear'});
   }else{
@@ -403,43 +466,30 @@ $('#chk').onclick=function(){
     if(anim)A({targets:'#slots',translateX:[0,-8,8,-5,5,0],duration:350,easing:'linear'});
   }
 };
-
+ 
 /* ecranul 4: felicitarea în C */
 var CODE='#include <stdio.h>\n\nint main(void) {\n    printf("Dumneavoastră sunteți la fel de frumoasă ca sintaxa Python-ului și la fel de elegantă ca limbajul C. Vă felicităm cu ocazia zilei de 8 Martie!\\n");\n    return 0;\n}\n\n';
 function finale(){
   var o=$('#out');
   o.innerHTML=hl(CODE);o.classList.add('cur');
   o.onclick=function(){o._skip&&o._skip()};
-  typeIn(o,function(){var ok=document.createElement('span');ok.className='ok';ok.textContent='✓ Compilare reușită';o.appendChild(ok);if(anim)A({targets:ok,opacity:[0,1],duration:500,easing:'linear'});$('#again').classList.remove('hide');if(navigator.share)$('#share').classList.remove('hide');
+  typeIn(o,function(){var ok=document.createElement('span');ok.className='ok';ok.textContent='✓ Compilare reușită';o.appendChild(ok);if(anim)A({targets:ok,opacity:[0,1],duration:500,easing:'linear'});$('#again').classList.remove('hide');
     if(anim){
       A({targets:'#sticker',opacity:[0,1],scale:[.3,1],rotate:[-25,-6],duration:900,easing:'easeOutElastic(1,.6)',complete:function(){A({targets:'#sticker',rotate:[-6,0],direction:'alternate',loop:true,duration:1500,easing:'easeInOutSine'})}});
       A({targets:'#sig',opacity:[0,1],duration:800,delay:300,easing:'linear'});burst($('#sticker'));rain();
     }else{$('#sticker').style.opacity=1;$('#sig').style.opacity=1}
   },6);
 }
-
-function stopFx(){
-  if(anim){A.remove('.rn');A.remove('#sticker')}
-  [].forEach.call(document.querySelectorAll('.rn'),function(x){x.remove()});rd=false;
-}
-function resetFinale(){
-  stopFx();var st=$('#sticker'),o=$('#out');
-  st.style.opacity='';st.style.transform='';$('#sig').style.opacity='';
-  $('#again').classList.add('hide');$('#share').classList.add('hide');
-  o.classList.remove('cur');o.innerHTML='';
-}
+ 
 function enter(n){
   var ts=[].slice.call(S[n].querySelectorAll('.t'));
   if(anim)A({targets:S[n].querySelector('.win'),opacity:[0,1],translateY:[24,0],scale:[.97,1],duration:500,easing:'easeOutCubic'});
-  if(n===0){$('#start').classList.add('hide');seq(ts,function(){startLoop(function(){$('#start').classList.remove('hide')})})}
-  else if(n===1){qi=0;score=0;seq(ts,ask)}
-  else if(n===2){
-    pdone=false;initP();$('#chk').classList.remove('hide');$('#next2').classList.add('hide');$('#pres').textContent='';
-    $('#slots').style.opacity=0;$('#bank').style.opacity=0;
-    seq(ts,function(){$('#slots').style.opacity=1;$('#bank').style.opacity=1;if(anim)A({targets:'#bank .blk',opacity:[0,1],translateY:[16,0],delay:A.stagger(70),duration:350,easing:'easeOutBack'})})}
-  else{resetFinale();seq(ts,finale)}
+  if(n===0)seq(ts,function(){startLoop(function(){$('#start').classList.remove('hide')})});
+  else if(n===1)seq(ts,ask);
+  else if(n===2){if(!ans.length&&!bank.length)initP();$('#slots').style.opacity=0;$('#bank').style.opacity=0;seq(ts,function(){$('#slots').style.opacity=1;$('#bank').style.opacity=1;if(anim)A({targets:'#bank .blk',opacity:[0,1],translateY:[16,0],delay:A.stagger(70),duration:350,easing:'easeOutBack'})})}
+  else seq(ts,finale);
 }
-
+ 
 /* animații: explozie de simboluri și ploaie de cod */
 function burst(el){
   if(!anim)return;
@@ -462,36 +512,112 @@ function rain(){
   }
   A({targets:'.rn',translateY:['-10vh','110vh'],translateX:function(){return A.random(-40,40)},rotate:function(){return A.random(-60,60)},duration:function(){return A.random(7000,12000)},delay:function(){return A.random(0,5000)},loop:true,easing:'linear'});
 }
-
+ 
 /* tranziție în stil terminal: "make ecran_N" cu bară de progres */
 function go(n){
   if(busy)return;busy=true;
   var tr=$('#tr'),t=$('#trt'),o={p:0};
   function fin(){
-    clearInterval(loopT);clearInterval(mT);gen++;stopFx();
-    [].forEach.call(document.querySelectorAll('.typing'),function(x){x.classList.remove('typing')});
-    S[cur].classList.remove('on');S[n].classList.add('on');cur=n;S[n].scrollTop=0;enter(n);
-    if(anim)A({targets:tr,opacity:0,duration:250,easing:'linear',complete:function(){tr.style.display='none';busy=false}});
+    clearInterval(loopT);clearInterval(mT);window.lgoStop();
+    if(mini)resetMini();S[cur].classList.remove('on');S[n].classList.add('on');cur=n;S[n].scrollTop=0;enter(n);
+    if(anim)A({targets:tr,opacity:0,duration:900,easing:'linear',complete:function(){tr.style.display='none';busy=false}});
     else{tr.style.display='none';busy=false}
   }
   if(!anim){fin();return}
-  tr.style.display='flex';tr.style.opacity=0;
+  tr.style.display='flex';tr.style.opacity=0;window.lgoStart();
   A({targets:S[cur].querySelector('.win'),translateX:[0,-7,7,-4,4,0],opacity:[1,.55,1,.4,.8,1],duration:300,easing:'linear'});
-  A({targets:tr,opacity:1,duration:150,easing:'linear'});
-  A({targets:o,p:100,duration:750,round:1,easing:'easeInOutQuad',
+  A({targets:tr,opacity:1,duration:600,easing:'linear'});
+  A({targets:o,p:100,duration:4500,round:1,easing:'easeInOutQuad',
     update:function(){var f=Math.round(o.p/10);t.innerHTML='<span class="ok">$</span> make ecran_'+(n+1)+'\n<span class="fn">['+'#'.repeat(f)+'-'.repeat(10-f)+']</span> '+o.p+'%\n<span class="dim">0x'+(((Math.random()*0xffffff)|0).toString(16))+'</span>'+(o.p>25?'\n<span class="ok">✔</span> compile':'')+(o.p>55?'\n<span class="ok">✔</span> link':'')+(o.p>85?'\n<span class="ok">✔</span> test':'')},
     complete:fin});
 }
-
+ 
+/* minimizare ca în macOS: fereastra se strânge într-un fișier în dock */
+var mini=false,md={dx:0,dy:0},curExt='py',EXT=['','py','pas','c'],NM=['surpriza','test','felicitare','felicitare'];
+function genie(w,p){
+  var N=14,L=[],R=[],i,v,loc,c,half;
+  for(i=0;i<=N;i++){
+    v=i/N;loc=Math.min(1,Math.max(0,(p-(1-v)*.4)/.6));loc=loc*loc*(3-2*loc);
+    c=50+loc*md.dx/md.ww*100;half=50*(1-loc*(1-md.ratio));
+    L.push((c-half).toFixed(2)+'% '+(v*100).toFixed(2)+'%');
+    R.unshift((c+half).toFixed(2)+'% '+(v*100).toFixed(2)+'%');
+  }
+  w.style.clipPath='polygon('+L.concat(R).join(',')+')';
+  w.style.transform='translateY('+(md.dy*p).toFixed(1)+'px) scaleY('+(1-.9*p).toFixed(3)+')';
+  w.style.opacity=p>.9?Math.max(0,(1-p)/.1):1;
+}
+function dockExt(){
+  var e=cur===0?curExt:EXT[cur];
+  $('#dkx').textContent='.'+e;$('#dkn').textContent=NM[cur]+'.'+e;
+  if(anim&&mini)A({targets:'#dkx',opacity:[0,1],scale:[.6,1],duration:350,easing:'easeOutBack'});
+}
+function minimize(){
+  if(mini||busy)return;mini=true;
+  var sc=S[cur],w=sc.querySelector('.win'),r=w.getBoundingClientRect();
+  $('#dock').classList.remove('hide');dockExt();
+  var d=$('#dk').getBoundingClientRect();
+  md={dx:d.left+d.width/2-(r.left+r.width/2),dy:d.top+d.height/2-(r.top+r.height/2),ww:r.width,ratio:d.width/r.width};
+  document.body.classList.add('mini');
+  if(!anim){sc.classList.add('min');return}
+  var o={p:0};
+  A({targets:o,p:1,duration:800,easing:'easeInOutCubic',update:function(){genie(w,o.p)},
+    complete:function(){sc.classList.add('min');A({targets:'#dk',translateY:[0,-16,0],duration:500,easing:'easeOutQuad'})}});
+}
+function restore(){
+  if(!mini)return;mini=false;
+  var sc=S[cur],w=sc.querySelector('.win');
+  sc.classList.remove('min');document.body.classList.remove('mini');$('#dock').classList.add('hide');
+  if(anim){var o={p:1};genie(w,1);A({targets:o,p:0,duration:700,easing:'easeOutCubic',update:function(){genie(w,o.p)},complete:function(){w.style.clipPath='';w.style.transform='';w.style.opacity=''}})}
+  else{w.style.clipPath='';w.style.transform='';w.style.opacity=''}
+}
+function resetMini(){S[cur].classList.remove('min');document.body.classList.remove('mini');$('#dock').classList.add('hide');mini=false}
+[].forEach.call(document.querySelectorAll('.bar i'),function(i){i.onclick=minimize});
+$('#dk').onclick=restore;
+document.addEventListener('keydown',function(e){if(e.key==='Escape')restore()});
+ 
 $('#start').onclick=function(){go(1)};
 $('#next2').onclick=function(){go(3)};
-var pr=0;document.addEventListener('pointermove',function(e){if(!anim||drag)return;cancelAnimationFrame(pr);pr=requestAnimationFrame(function(){$('#bg').style.transform='translate('+((e.clientX/innerWidth-.5)*-16)+'px,'+((e.clientY/innerHeight-.5)*-16)+'px)'})});
+ 
 document.addEventListener('visibilitychange',function(){var a=window.bgA;if(a)document.hidden?a.pause():a.play()});
-$('#again').onclick=function(){go(0)};
-$('#share').onclick=function(){var u=/^https?:/.test(location.href)?location.href:undefined;try{navigator.share({title:document.title,text:'La mulți ani de 8 Martie! 🌷',url:u}).catch(function(){})}catch(_){}};
-function back(){if(cur>0&&!busy&&!drag)go(cur-1)}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'||e.key==='ArrowLeft')back()});
-[].forEach.call(document.querySelectorAll('.screen:not(#s0) .bar i:first-child'),function(i){i.onclick=back});
+var LOGOS=[{"n":"Python","p":["#fdde57","#fed140","#61848a","#28455a","#000000"],"L":["00000000000000445555556555554000000000000000","00000000000045566566555555666554000000000000","00000000000465799756555555555556400000000000","00000000000465899855555555555556500000000000","00000000000566666666665555555555500000000000","00000000000455555555555555555555500000000000","00000000000000000000005555555555505555540000","00055666666666666666665555555555408888887500","04666555555555555555555555555555408888888850","05655555555555555555555555555555408888888884","56555555555555555555555555555556008888888886","56555555555556666666666666666550068888888887","56555555555655444444444444440004688888888888","56555555556500456666666666666678888888888888","56555555565057888888888888888888888888888887","56555555550588888888888888888888888888888886","05555555550788888888888888888888888888888884","04665555550788888888888888888888888888888840","00455665650788888888888888888888888888876000","00000444440788888888874444444444444444400000","00000000000788888888887777777777500000000000","00000000000688888888888888888888600000000000","00000000000788888888888888999988600000000000","00000000000588888888888888899888500000000000","00000000000057888888888888888876000000000000","00000000000000456778888887766500000000000000"],"C":["00000000000000333222222222333000000000000000","00000000000032222222222222222233000000000000","00000000000322200222222222222222300000000000","00000000000322000022222222222222300000000000","00000000000322222222222222222222300000000000","00000000000333333333332222222222300000000000","00000000000000000000003222222222303333340000","00032222222222222222222222222222300000011300","03222222222222222222222222222222301111111030","02222222222222222222222222222222301111111114","32222222222222222222222222222222001111111112","22222222222222222222222222222230020111111111","22222222222223333333333333330004101111111111","22222222222300332222222222222111011111111111","22222222223031000000000000000011111111111111","32222222220300000111111111111111111111111112","02222222220100001111111111111111111111111114","03222222220100111111111111111111111111111130","00332222220101111111110011111111111111112000","00000333330101111111113333333333333334400000","00000000000101111111111111111111300000000000","00000000000101111111111111100111200000000000","00000000000101111111111111000011200000000000","00000000000301111111111111000011300000000000","00000000000031111111111111111112000000000000","00000000000000331111111111112300000000000000"]},{"n":"JavaScript","p":["#fde71f","#f7df1e","#f6df1e","#dec81b","#161403"],"L":["88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888","88888888888888888888777788888887777788888888","88888888888888888887000088888640000045888888","88888888888888888887000088884000000000488888","88888888888888888887000088860004887646788888","88888888888888888887000088850004888888888888","88888888888888888887000088870000056788888888","88888888888888888887000088887400000045788888","88888888888888888887000088888876400000058888","88888888888888888887000088888888887500006888","88888888888888678887000088886578888850005888","88888888888750006774000488600005777500006888","88888888888850000000004788850000000000058888","88888888888887544004568888887654000446788888","88888888888888888888888888888888888888888888","88888888888888888888888888888888888888888888"],"C":["11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111111111111111111111111111","11111111111111111111222211111112222221111111","11111111111111111111000011112210000012211111","11111111111111111112333321121013333310021111","11111111111111111203000021202340000043302111","11111111111111111203000021134000000000431211","11111111111111111203000022030004323343321111","11111111111111111203000022040004200000011111","11111111111111111203000021030000043320021111","11111111111111111203000021203400000044301111","11111111111112221203000021220033400000040211","11111111111221002203000021200000033400003021","11111111112002330003000021023430000040004021","11111111120340003334000400300003333300003021","11111111121240000000004301340000000000040211","11111111112103444004432022003344000443301111","11111111111220002221001211220000222100021111","11111111111112221111222111112222111122211111"]},{"n":"C","p":["#ffffff","#d5e3f0","#5d94cd","#014d8e","#000102"],"L":["00000000000000000006666600000000000000000000","00000000000000000667766776600000000000000000","00000000000000667766666666776600000000000000","00000000000667766666666666666776600000000000","00000000667766666667777776666666776600000000","00000667766666778899999999887766666776600000","00667766666678999999999999999987666666776700","67766666667999999999999999999999976666666655","66666666689999999999999999999999998766655555","66666666899999999999888899999999999755555555","66666668999999999876666667899999865555555555","66666679999999986666666666678875545555555555","66666699999999866666666676655545555555555555","66666799999999766666676655555555555555555555","66666799999999666676655555555555555555555555","66666799999999766655444445555555555555555555","66666699999999855444444444444545555555555555","66666679999999974444444444447876545555555555","66666668999999998754444445789999876555555555","66677655899999999998877889999999999745555555","77665444479999999999999999999999997544445555","65444444446899999999999999999999864444444455","00444444444468999999999999999986444444444400","00000444444444567889999998876544444444400000","00000000444444444445555554444444444400000000","00000000000444444444444444444444400000000000","00000000000000444444444444444400000000000000","00000000000000000444444444400000000000000000","00000000000000000000444400000000000000000000"],"C":["00000000000000000002222200000000000000000000","00000000000000000222222222200000000000000000","00000000000000222222222222222200000000000000","00000000000222222222222222222222200000000000","00000000222222222222222222222222222200000000","00000222222222211100000000111222222222200000","00222222222221000000000000000012222222222200","22222222222100000000000000000000122222222223","22222222210000000000000000000000001222233333","22222222100000000001111110000000000133333333","22222221000000000122222222100000123333333333","22222210000000012222222222221123333333333333","22222210000000122222222222223333333333333333","22222200000000222222222223333333333333333333","22222200000000222222223333333333333333333333","22222200000000222223333333333333333333333333","22222210000000133333333333333333333333333333","22222210000000023333333333332122333333333333","22222221000000001233333333210000122333333333","22222223100000000001111110000000000133333333","22223333310000000000000000000000002333333333","23333333332100000000000000000000123333333333","00333333333321000000000000000012333333333300","00000333333333322110000001122333333333300000","00000000333333333333333333333333333300000000","00000000000333333333333333333333300000000000","00000000000000333333333333333300000000000000","00000000000000000333333333300000000000000000","00000000000000000000333300000000000000000000"]},{"n":"C++","p":["#feffff","#afcbe5","#5c92ca","#054c8a","#01060a"],"L":["00000000000000000005666654000000000000000000","00000000000000005667666676650000000000000000","00000000000005667766666666776650000000000000","00000000005667766666666666666776650000000000","00000005667766666666666666666666776650000000","00004667766666666667777776666666666776650000","04667766666666678899999999887666666666776640","57766666666678999999999999999987666666667664","66666666666899999999999999999999866677665555","66666666678999999999999999999999997665555555","66666666799999999988777788999999876555555555","66666666899999998766666666789976544555555555","66666667999999986666666677666544555555555555","66666668999999966666677665555555579555579655","66666668999999866677665555555556899875899875","66666668999999967665444445555555578555578555","66666667999999985444444444446544555555555555","66666666899999997544444444579976545555555555","66666677689999999987665678999999986555555555","66677665458999999999999999999999985455555555","67665544444699999999999999999999644444455555","55544444444456899999999999999865444444444454","00444444444444456788999988765444444444444400","00000444444444444444555544444444444444400000","00000000444444444444444444444444444400000000","00000000000444444444444444444444400000000000","00000000000000444444444444444400000000000000","00000000000000000444444444400000000000000000","00000000000000000000444400000000000000000000"],"C":["00000000000000000003222234000000000000000000","00000000000000003222222222230000000000000000","00000000000003222222222222222230000000000000","00000000003222222222222222222222230000000000","00000003222222222222222222222222222230000000","00003222222222222222222222222222222222230000","03222222222222211100000000111222222222222230","32222222222221000000000000000012222222222223","22222222222100000000000000000000122222223333","22222222220000000000000000000000002223333333","22222222200000000011111111000000012333333333","22222222100000001222222222210012333333333333","22222221000000012222222222222333333333333333","22222221000000022222222223333333310333320233","22222221000000122222223333333332100023100013","22222221000000022223333333333333310333320233","22222221000000013333333333332333333333333333","22222222100000001333333333310012333333333333","22222222200000000012222221000000012333333333","22222223331000000000000000000000013333333333","22223333333200000000000000000000233333333333","32333333333332100000000000000123333333333333","00333333333333332110000001123333333333333300","00000333333333333333333333333333333333300000","00000000333333333333333333333333333300000000","00000000000333333333333333333333300000000000","00000000000000333333333333333300000000000000","00000000000000000333333333300000000000000000","00000000000000000000333300000000000000000000"]}];
+/* logo-uri ASCII care se rotesc în 3D, doar în timpul tranziției dintre ecrane */
+(function(){
+  var cv=$('#lgo'),cx=cv.getContext('2d'),RAMP=' .:-=+*#%@',COLS=44,li=-1,th=-1.26,run=false,raf=0,tl=0,w,h,cw,chh,dpr=Math.min(2,window.devicePixelRatio||1);
+  function size(){
+    w=Math.min(innerWidth*.82,420);cw=w/COLS;chh=cw*1.7;
+    h=Math.max.apply(null,LOGOS.map(function(l){return l.L.length}))*chh;
+    cv.style.width=w+'px';cv.style.height=h+'px';cv.width=w*dpr;cv.height=h*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function draw(){
+    var L=LOGOS[Math.max(li,0)],rows=L.L.length,c=Math.cos(th),sn=Math.sin(th),oy=(h-rows*chh)/2,lastc='';
+    cx.clearRect(0,0,w,h);
+    if(Math.abs(c)<.06)return;
+    cx.font='700 '+(cw*1.25)+'px "JetBrains Mono",monospace';cx.textAlign='center';cx.textBaseline='middle';
+    for(var r=0;r<rows;r++){
+      for(var x=0;x<COLS;x++){
+        var xo=x+.5-COLS/2,sx=Math.floor(xo/c+COLS/2);
+        if(sx<0||sx>=COLS)continue;
+        var lv=+L.L[r].charAt(sx);if(!lv)continue;
+        lv=Math.max(1,Math.round(lv*(.45+.55*Math.abs(c))));
+        var col=L.p[+L.C[r].charAt(sx)];
+        if(col!==lastc){cx.fillStyle=col;lastc=col}
+        cx.fillText(RAMP.charAt(lv),(x+.5)*cw,oy+(r+.5)*chh+xo*sn*chh*.09);
+      }
+    }
+  }
+  function tick(t){
+    if(!run)return;
+    if(t-tl>=33){th+=Math.min((t-tl)/1000,.1)*.5;tl=t;draw()}
+    raf=requestAnimationFrame(tick);
+  }
+  window.lgoStart=function(){
+    if(!anim||run)return;
+    li=(li+1)%LOGOS.length;th=-1.26;tl=0;run=true;size();draw();raf=requestAnimationFrame(tick);
+  };
+  window.lgoStop=function(){run=false;cancelAnimationFrame(raf)};
+  size();
+})();
+$('#again').onclick=function(){location.reload()};
 enter(0);
 })();
 </script>
